@@ -33,3 +33,7 @@
 textarea {
   resize: none;
 }
+
+.red {
+  background-color: rgb(255, 60, 60);
+}

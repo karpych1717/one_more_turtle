@@ -12,7 +12,12 @@
       <canvas class='canvas' id='animation-canvas'></canvas>      
     </div>
     <div id='console-wrapper'>
-        <textarea id='console' cols='80' rows='10' readonly></textarea>
+        <form id='console-input'>
+          <input type='text' class='input'>
+          <button type='submit'>Run</button>
+          <button type='reset'>Clear</button>
+        </form>
+        <textarea id='console-output' cols='80' rows='10' readonly></textarea>
     </div>
 
     <script type='text/javascript' src='black_box/turtle.js'></script>
