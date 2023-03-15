@@ -1,0 +1,35 @@
+#canvas-wrapper {
+  display: inline-block;
+  position: relative;
+
+  margin: 10px;
+}
+.canvas {
+  width: 500px;
+  height: 500px;
+}
+#back-canvas {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+#draw-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#animation-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#console-wrapper {
+  display: inline-block;
+  vertical-align:top;
+
+  margin: 10px
+}
+textarea {
+  resize: none;
+}
