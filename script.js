@@ -1,1 +1,1 @@
-console.log('wu')
+console.log('script.js is ready')
