@@ -79,11 +79,11 @@ document.getElementById('console-input').addEventListener('submit', function (ev
   })
   
   document.getElementById('console-input').addEventListener('reset', function (event) {
-      this.classList.remove('red')
+    this.querySelector('.input').classList.remove('red')
   })
   
   document.querySelector('.input').addEventListener('input', function (event) {
-      this.classList.remove('red')
+    this.classList.remove('red')
   })
 
   console.log('console.js is ready')

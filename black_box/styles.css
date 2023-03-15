@@ -30,6 +30,9 @@
 
   margin: 10px
 }
+form {
+  margin: 10px;
+}
 textarea {
   resize: none;
 }
