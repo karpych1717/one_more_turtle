@@ -5,8 +5,10 @@
   margin: 10px;
 }
 .canvas {
-  width: 500px;
-  height: 500px;
+  width: 501px;
+  height: 501px;
+  border: 1px solid greenyellow;
+  image-rendering: pixelated;
 }
 #back-canvas {
   position: relative;

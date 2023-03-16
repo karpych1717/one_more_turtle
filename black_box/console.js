@@ -21,6 +21,8 @@ document.getElementById('console-input').addEventListener('submit', function (ev
     taskArgs = taskArgs.split(',').map( part => part.trim() )
   
     console.log(taskName, taskArgs)
+
+    if (taskArgs.length === 1 && taskArgs[0] === '') taskArgs = []
   
     try {
       switch (taskName) {
