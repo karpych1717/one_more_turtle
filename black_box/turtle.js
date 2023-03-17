@@ -8,7 +8,7 @@ const turtle = {
   angle: 90,
   va: 20,
   color: 'blue',
-  width: 1,
+  width: 15,
   trace: true,
   pic: (() => {
     const pic = new Image()
@@ -34,8 +34,19 @@ const turtle = {
     ctx.translate(- Math.round(this.x) - 251,  Math.round(this.y) - 251)
   },
   forwardStep: function (dt) {
-    this.x += V_COEF * this.v * Math.cos(Math.PI * this.angle / 180) * dt
-    this.y += V_COEF * this.v * Math.sin(Math.PI * this.angle / 180) * dt
+    if (this.trace) {
+      drawCTX.beginPath();
+      drawCTX.moveTo(this.x + 251, -this.y + 251);
+
+      this.x += V_COEF * this.v * Math.cos(Math.PI * this.angle / 180) * dt
+      this.y += V_COEF * this.v * Math.sin(Math.PI * this.angle / 180) * dt
+
+      drawCTX.lineTo(this.x + 251, -this.y + 251);
+      drawCTX.lineWidth = this.width
+      drawCTX.strokeStyle = this.color
+      drawCTX.stroke();
+    }
+     
   },
   leftStep: function (dt) {
     this.angle += VA_COEF * this.va * dt
@@ -53,7 +64,12 @@ const turtle = {
     if (this.currentTask === null) {
       this.currentTask = this.tasks.shift() || null
     }  else {
-      if (this.currentTask.time <= 0) this.currentTask = null
+      if (this.currentTask.time <= 0) {
+        if (this.currentTask.type === 'left' || this.currentTask.type === 'right') {
+          this.angle = this.currentTask.final
+        }
+        this.currentTask = null
+      }
     }
     if (this.currentTask === null) return
 
@@ -109,12 +125,12 @@ function forward (length = 30) {
 
 function left (angle = 90) {
     const time = angle / turtle.va / VA_COEF
-    turtle.addTask({type: 'left', time})
+    turtle.addTask({type: 'left', time, final: turtle.angle + angle})
 }
 
 function right (angle = 90) {
     const time = angle / turtle.va / VA_COEF
-    turtle.addTask({type: 'right', time})
+    turtle.addTask({type: 'right', time, final: turtle.angle - angle})
 }
 
 function goto (x, y) {
@@ -141,12 +157,18 @@ function color (color) {
   turtle.addTask({type: 'color', color})
 }
 
-const liveCVS = document.getElementById('animation-canvas')
-const liveCTX = liveCVS.getContext('2d')
-liveCVS.width = 501
-liveCVS.height = 501
+function canvasSetUp (id, context, width, height) {
+  const cvs = document.getElementById(id)
+  const ctx = cvs.getContext(context)
+  cvs.width = width
+  cvs.height = height
 
-turtle.pic.onload = () => turtle.draw(liveCTX)
+  return {cvs, ctx}
+}
+
+const {cvs: liveCVS, ctx: liveCTX} = canvasSetUp('animation-canvas', '2d', 501, 501)
+const {cvs: drawCVS, ctx: drawCTX} = canvasSetUp('draw-canvas', '2d', 501, 501)
+// const {cvs: backCVS, ctx: backCTX} = canvasSetUp('back-canvas', '2d', 501, 501)
 
 const timer = (function createTimer() {
   let prevTime = new Date().getTime()
@@ -166,6 +188,6 @@ function render () {
     window.requestAnimationFrame(render)
 }
 
-render()
+turtle.pic.onload = render
 
 console.log('turtle.js is ready')
