@@ -26,10 +26,6 @@ document.getElementById('console-input').addEventListener('submit', function (ev
   
     try {
       switch (taskName) {
-        case 'test':
-          console.log(`test(${taskArgs})`)
-          this.reset()
-          break
         case 'showGrid':
           showGrid()
           this.reset()
@@ -59,23 +55,24 @@ document.getElementById('console-input').addEventListener('submit', function (ev
           this.reset()
           break
         case 'angle':
-          angle(...args)
+          angle(...taskArgs)
           this.reset()
           break
         case 'width':
-          width(...args)
+          width(...taskArgs)
           this.reset()
           break
         case 'color':
-          color(...args)
+          color(...taskArgs)
           this.reset()
           break
         default:
           console.log('eror 404')
           this.querySelector('.input').classList.add('red')
       } 
-    } catch {
+    } catch (error) {
       console.log('something unexpected went wrong')
+      // console.error(error)
       this.querySelector('.input').classList.add('red')
     }
   })
