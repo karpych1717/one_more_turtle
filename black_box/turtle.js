@@ -5,10 +5,12 @@ const turtle = {
   x: 0,
   y: 0,
   v: 20,
-  angle: 0,
+  vx: 0,
+  vy: 20,
+  angle: 90,
   va: 20,
   color: 'blue',
-  width: 15,
+  width: 1,
   trace: true,
   pic: (() => {
     const pic = new Image()
@@ -31,24 +33,11 @@ const turtle = {
     ctx.drawImage(this.pic, -11.5, -11.5)
 
     ctx.rotate(2 * Math.PI * (this.angle - 90) / 360)
-    ctx.translate(- Math.round(this.x) - 251.5,  Math.round(this.y) - 251.5)
- 
-    
+    ctx.translate(- Math.round(this.x) - 251.5,  Math.round(this.y) - 251.5)   
   },
   forwardStep: function (dt) {
-    if (this.trace) {
-      drawCTX.beginPath();
-      drawCTX.moveTo(this.x + 251, -this.y + 251);
-
-      this.x += V_COEF * this.v * Math.cos(Math.PI * this.angle / 180) * dt
-      this.y += V_COEF * this.v * Math.sin(Math.PI * this.angle / 180) * dt
-
-      drawCTX.lineTo(this.x + 251, -this.y + 251);
-      drawCTX.lineWidth = this.width
-      drawCTX.strokeStyle = this.color
-      drawCTX.stroke();
-    }
-     
+    this.x += V_COEF * this.vx * dt
+    this.y += V_COEF * this.vy * dt     
   },
   leftStep: function (dt) {
     this.angle += VA_COEF * this.va * dt
@@ -62,6 +51,34 @@ const turtle = {
     if (this.angle >= 360) this.angle -= 360
     if (this.angle < 0) this.angle += 360
   },
+  currentForwardTaskInit: function () {
+    this.currentTask.toInit = false
+
+    this.currentTask.time = this.currentTask.length / this.v / V_COEF
+
+    if (this.angle === 0) {
+      this.vx = this.v
+      this.vy = 0
+    } else if (this.angle === 90) {
+      this.vx = 0
+      this.vy = this.v
+    } else if (this.angle === 180) {
+      this.vx = - this.v
+      this.vy = 0
+    } else if (this.angle === 270) {
+      this.vx = 0
+      this.vy = - this.v
+    } else {
+      this.vx = this.v * Math.cos(Math.PI * this.angle / 180)
+      this.vy = this.v * Math.sin(Math.PI * this.angle / 180)
+    }
+
+    this.currentTask.startX = this.x
+    this.currentTask.startY = this.y
+
+    this.currentTask.finalX = this.x + this.currentTask.length * Math.cos(Math.PI * this.angle / 180)
+    this.currentTask.finalY = this.y + this.currentTask.length * Math.sin(Math.PI * this.angle / 180)
+  },
   evolve: function (dt) {
     if (this.currentTask === null) {
       this.currentTask = this.tasks.shift() || null
@@ -70,6 +87,18 @@ const turtle = {
         if (this.currentTask.type === 'left' || this.currentTask.type === 'right') {
           this.angle = this.currentTask.final
         }
+        if (this.currentTask.type === 'forward') {
+          this.x = Math.round(this.currentTask.finalX)
+          this.y = Math.round(this.currentTask.finalY)
+
+          drawCTX.beginPath();
+          drawCTX.moveTo(this.currentTask.startX + 251, -this.currentTask.startY + 251);
+          drawCTX.lineTo(this.x + 251, -this.y + 251);
+          drawCTX.lineCap = 'round'
+          drawCTX.lineWidth = this.width
+          drawCTX.strokeStyle = this.color
+          drawCTX.stroke()
+        }
         this.currentTask = null
       }
     }
@@ -77,7 +106,19 @@ const turtle = {
 
     switch (this.currentTask.type) {
       case 'forward':
+        if(this.currentTask.toInit) this.currentForwardTaskInit()
+        
         this.forwardStep(dt)
+
+        if (this.trace) {
+          liveCTX.beginPath();
+          liveCTX.moveTo(this.currentTask.startX + 251, -this.currentTask.startY + 251);
+          liveCTX.lineTo(this.x + 251, -this.y + 251);
+          liveCTX.lineCap = 'round'
+          liveCTX.lineWidth = this.width
+          liveCTX.strokeStyle = this.color
+          liveCTX.stroke();
+        }
         break
       case 'left':
         this.leftStep(dt)
@@ -120,19 +161,17 @@ const turtle = {
 }
 
 function forward (length = 30) {
-    const time = length / turtle.v / V_COEF
-
-    turtle.addTask({type: 'forward', time})
+  turtle.addTask({type: 'forward', toInit: true, length})
 }
 
 function left (angle = 90) {
-    const time = angle / turtle.va / VA_COEF
-    turtle.addTask({type: 'left', time, final: turtle.angle + angle})
+  const time = angle / turtle.va / VA_COEF
+  turtle.addTask({type: 'left', time, final: turtle.angle + angle})
 }
 
 function right (angle = 90) {
-    const time = angle / turtle.va / VA_COEF
-    turtle.addTask({type: 'right', time, final: turtle.angle - angle})
+  const time = angle / turtle.va / VA_COEF
+  turtle.addTask({type: 'right', time, final: turtle.angle - angle})
 }
 
 function goto (x, y) {
