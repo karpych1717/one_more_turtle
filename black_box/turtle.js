@@ -79,6 +79,18 @@ const turtle = {
     this.currentTask.finalX = this.x + this.currentTask.length * Math.cos(Math.PI * this.angle / 180)
     this.currentTask.finalY = this.y + this.currentTask.length * Math.sin(Math.PI * this.angle / 180)
   },
+  currentRotationTaskInit: function () {
+    this.currentTask.toInit = false
+
+    this.currentTask.time = this.currentTask.angle / this.va / VA_COEF
+
+    if (this.currentTask.type === 'left') {
+      this.currentTask.final = this.angle + this.currentTask.angle
+    }
+    if (this.currentTask.type === 'right') {
+      this.currentTask.final = this.angle - this.currentTask.angle
+    }
+  },
   evolve: function (dt) {
     if (this.currentTask === null) {
       this.currentTask = this.tasks.shift() || null
@@ -167,13 +179,11 @@ function forward (length = 30) {
 }
 
 function left (angle = 90) {
-  const time = angle / turtle.va / VA_COEF
-  turtle.addTask({type: 'left', time, final: turtle.angle + angle})
+  turtle.addTask({type: 'left', toInit: true, angle})
 }
 
 function right (angle = 90) {
-  const time = angle / turtle.va / VA_COEF
-  turtle.addTask({type: 'right', time, final: turtle.angle - angle})
+  turtle.addTask({type: 'right', toInit: true, angle})
 }
 
 function goto (x, y) {
