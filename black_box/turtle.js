@@ -100,8 +100,8 @@ const turtle = {
           this.angle = this.currentTask.final
         }
         if (this.currentTask.type === 'forward') {
-          this.x = Math.round(this.currentTask.finalX)
-          this.y = Math.round(this.currentTask.finalY)
+          this.x = this.currentTask.finalX
+          this.y = this.currentTask.finalY
 
           if (this.trace) {
             drawCTX.beginPath();
@@ -135,9 +135,11 @@ const turtle = {
         }
         break
       case 'left':
+        if(this.currentTask.toInit) this.currentRotationTaskInit()
         this.leftStep(dt)
         break
       case 'right':
+        if(this.currentTask.toInit) this.currentRotationTaskInit()
         this.rightStep(dt)
         break
       case 'goto':

@@ -55,7 +55,7 @@ document.getElementById('console-input').addEventListener('submit', function (ev
           break
         case 'right':
           if (taskArgs.length === 0) {
-            left()
+            right()
           }
           if (taskArgs.length === 1) {
             if (isNaN(taskArgs[0])) {
@@ -63,7 +63,7 @@ document.getElementById('console-input').addEventListener('submit', function (ev
               return
             }
 
-            left(+taskArgs[0])
+            right(+taskArgs[0])
           }
           if (taskArgs.length > 1) {
             inputEror('extra args')
