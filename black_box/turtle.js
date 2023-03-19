@@ -91,13 +91,15 @@ const turtle = {
           this.x = Math.round(this.currentTask.finalX)
           this.y = Math.round(this.currentTask.finalY)
 
-          drawCTX.beginPath();
-          drawCTX.moveTo(this.currentTask.startX + 251, -this.currentTask.startY + 251);
-          drawCTX.lineTo(this.x + 251, -this.y + 251);
-          drawCTX.lineCap = 'round'
-          drawCTX.lineWidth = this.width
-          drawCTX.strokeStyle = this.color
-          drawCTX.stroke()
+          if (this.trace) {
+            drawCTX.beginPath();
+            drawCTX.moveTo(this.currentTask.startX + 251, -this.currentTask.startY + 251);
+            drawCTX.lineTo(this.x + 251, -this.y + 251);
+            drawCTX.lineCap = 'round'
+            drawCTX.lineWidth = this.width
+            drawCTX.strokeStyle = this.color
+            drawCTX.stroke()
+          }
         }
         this.currentTask = null
       }
