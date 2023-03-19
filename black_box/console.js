@@ -24,10 +24,10 @@ document.getElementById('console-input').addEventListener('submit', function (ev
     let taskArgs = task.slice(task.indexOf('(') + 1, task.indexOf(')'))
 
     taskArgs = taskArgs.split(',').map( part => part.trim() )
-  
-    console.log(taskName, taskArgs)
 
     if (taskArgs.length === 1 && taskArgs[0] === '') taskArgs = []
+
+    console.log(taskName, taskArgs)
 
     try {
       switch (taskName) {
@@ -36,42 +36,59 @@ document.getElementById('console-input').addEventListener('submit', function (ev
           this.reset()
           break
         case 'forward':
-          if (isNaN(taskArgs[0])) {
-            inputEror('distance is not a number')
-            return
+          if (taskArgs.length === 0) {
+            forward()
+          }
+          if (taskArgs.length === 1) {
+            if(isNaN(taskArgs[0])) {
+              inputEror('distance is not a number')
+              return
+            }
+            forward(+taskArgs[0])
           }
           if (taskArgs.length > 1) {
             inputEror('extra args')
             return
           }
 
-          forward(+taskArgs[0])
           this.reset()
           break
         case 'right':
-          if (isNaN(taskArgs[0])) {
-            inputEror('angle is not a number')
-            return
+          if (taskArgs.length === 0) {
+            left()
+          }
+          if (taskArgs.length === 1) {
+            if (isNaN(taskArgs[0])) {
+              inputEror('angle is not a number')
+              return
+            }
+
+            left(+taskArgs[0])
           }
           if (taskArgs.length > 1) {
             inputEror('extra args')
             return
           }
 
-          right(+taskArgs[0])
           this.reset()
           break
         case 'left':
-          if (isNaN(taskArgs[0])) {
-            inputEror('angle is not a number')
-            return
+          if (taskArgs.length === 0) {
+            left()
+          }
+          if (taskArgs.length === 1) {
+            if (isNaN(taskArgs[0])) {
+              inputEror('angle is not a number')
+              return
+            }
+
+            left(+taskArgs[0])
           }
           if (taskArgs.length > 1) {
             inputEror('extra args')
             return
           }
 
-          left(+taskArgs[0])
           this.reset()
           break
         case 'goto':
@@ -103,7 +120,7 @@ document.getElementById('console-input').addEventListener('submit', function (ev
           this.reset()
           break
         case 'angle':
-          if (taskArgs.length > 1) {
+          if (taskArgs.length > 0 && taskArgs.length > 1) {
             inputEror('extra args')
             return
           }
@@ -116,7 +133,7 @@ document.getElementById('console-input').addEventListener('submit', function (ev
           this.reset()
           break
         case 'width':
-          if (taskArgs.length > 1) {
+          if (taskArgs.length > 0 && taskArgs.length > 1) {
             inputEror('extra args')
             return
           }
@@ -138,7 +155,7 @@ document.getElementById('console-input').addEventListener('submit', function (ev
             return
           }
 
-          color(...taskArgs)
+          color(taskArgs[0].replaceAll(`'`, ``))
           this.reset()
           break
         default:
