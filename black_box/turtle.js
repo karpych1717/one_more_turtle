@@ -5,7 +5,7 @@ const turtle = {
   x: 0,
   y: 0,
   v: 20,
-  angle: 90,
+  angle: 0,
   va: 20,
   color: 'blue',
   width: 15,
@@ -20,18 +20,20 @@ const turtle = {
   draw: function (ctx) {
     ctx.clearRect(0, 0, 501, 501)
 
-    ctx.translate( Math.round(this.x) + 251, - Math.round(this.y) + 251)
-    ctx.rotate(-2 * Math.PI * (this.angle - 90) / 360)
-
     if (this.trace) {
       ctx.fillStyle = this.color
-      ctx.fillRect(-3, -3, 7, 7)
+      ctx.fillRect(Math.round(this.x) + 251 - 3, - Math.round(this.y) + 251 - 3, 7, 7)
     }
-    
-    ctx.drawImage(this.pic, -11, -11)
+
+    ctx.translate( Math.round(this.x) + 251.5, - Math.round(this.y) + 251.5)
+    ctx.rotate(-2 * Math.PI * (this.angle - 90) / 360)
+
+    ctx.drawImage(this.pic, -11.5, -11.5)
 
     ctx.rotate(2 * Math.PI * (this.angle - 90) / 360)
-    ctx.translate(- Math.round(this.x) - 251,  Math.round(this.y) - 251)
+    ctx.translate(- Math.round(this.x) - 251.5,  Math.round(this.y) - 251.5)
+ 
+    
   },
   forwardStep: function (dt) {
     if (this.trace) {
