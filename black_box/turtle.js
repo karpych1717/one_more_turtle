@@ -1,6 +1,32 @@
 const V_COEF = 0.002
 const VA_COEF = 0.004
 
+const cow = {
+  pic: (() => {
+    const pic = new Image()
+    pic.src = 'black_box/cow_sprite.png'
+    return pic
+  })(),
+  time: 0,
+  period: 2000,
+  frame: function () {
+    const frame = Math.trunc(this.time / this.period * 20)
+    return frame < 20 ? frame : 19
+  },
+  evolve: function (dt) {
+    this.time += dt
+
+    if (this.time >= this.period) this.time = 0
+  },
+  draw: function (ctx) {
+    ctx.rotate(- Math.PI * 90 / 180)
+    ctx.drawImage(this.pic, this.frame() * 51, 0, 51, 51, -25.5, -25.5, 51, 51)
+    ctx.rotate(Math.PI * 90 / 180)
+    // ctx.drawImage(this.pic, 0, 0)
+    console.log(this.frame())
+  }
+}
+
 const turtle = {
   x: 0,
   y: 0,
@@ -12,6 +38,7 @@ const turtle = {
   color: 'blue',
   width: 1,
   trace: true,
+  cow: true,
   pic: (() => {
     const pic = new Image()
     pic.src = 'black_box/turtle_sprite.png'
@@ -19,7 +46,7 @@ const turtle = {
   })(),
   tasks: [],
   currentTask: null,
-  draw: function (ctx) {
+  draw: function (ctx, dt) {
     ctx.clearRect(0, 0, 501, 501)
 
     if (this.trace) {
@@ -30,7 +57,11 @@ const turtle = {
     ctx.translate( Math.round(this.x) + 251.5, - Math.round(this.y) + 251.5)
     ctx.rotate(-2 * Math.PI * (this.angle - 90) / 360)
 
-    ctx.drawImage(this.pic, -11.5, -11.5)
+    if (!this.cow) {
+      ctx.drawImage(this.pic, -11.5, -11.5)
+    } else {
+      cow.draw(ctx, dt)
+    }   
 
     ctx.rotate(2 * Math.PI * (this.angle - 90) / 360)
     ctx.translate(- Math.round(this.x) - 251.5,  Math.round(this.y) - 251.5)   
@@ -236,11 +267,16 @@ const timer = (function createTimer() {
   }
 })()
 
+let dt
 function render () {
-    turtle.draw(liveCTX)
-    turtle.evolve(timer())
+  dt = timer()
 
-    window.requestAnimationFrame(render)
+  turtle.draw(liveCTX)
+  turtle.evolve(dt)
+
+  cow.evolve(dt)
+
+  window.requestAnimationFrame(render)
 }
 
 turtle.pic.onload = render
