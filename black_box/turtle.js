@@ -152,7 +152,7 @@ const turtle = {
         this.forwardStep(dt)
 
         if (this.trace) {
-          liveCTX.beginPath();
+          liveCTX.beginPath()
           liveCTX.moveTo(this.currentTask.startX + 251, -this.currentTask.startY + 251)
           liveCTX.lineTo(this.x + 251, -this.y + 251)
           liveCTX.lineCap = 'round'
