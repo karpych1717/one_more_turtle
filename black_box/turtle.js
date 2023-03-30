@@ -20,7 +20,12 @@ const cow = {
   },
   draw: function (ctx) {
     ctx.rotate(- Math.PI * 90 / 180)
-    ctx.drawImage(this.pic, this.frame() * 51, 0, 51, 51, -25.5, -25.5, 51, 51)
+
+    // ctx.fillStyle = 'white'
+    // ctx.arc(0, 0, 23, 0, 2 * Math.PI)
+    // ctx.fill()
+
+    ctx.drawImage(this.pic, this.frame() * (51 + 2), 0, 51, 51, -25.5, -25.5, 51, 51)
     ctx.rotate(Math.PI * 90 / 180)
     // ctx.drawImage(this.pic, 0, 0)
     console.log(this.frame())

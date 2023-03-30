@@ -1,3 +1,59 @@
+html {
+  font-family: 'Circular', sans-serif;
+  color: lime;
+
+  background-color: black;
+}
+body {
+  background-color: #100b13;
+
+  padding: 2em;
+  padding-top: 1em;
+
+  margin: 1em 2em 1em;
+}
+header {
+  overflow: auto;
+
+  margin: 1em 10px 1em;
+  padding-bottom: 0.5em;
+
+  border-bottom: 1px solid lime;
+}
+header > h1 {
+  font-size: 3em;
+
+  float: right;
+
+  background-color: #322b36;
+  border-radius: 0.4em;
+
+  padding: 0em 0.2em 0em;
+
+  margin-top: 0;
+  margin-bottom: 0;
+}
+footer {
+  border-top: 1px solid lime;
+  text-align: center;
+
+  margin-top: 0.6em;
+  padding-top: 0.7em;
+}
+footer > a {
+  font-size: 1.5em;
+  text-decoration: none;
+  color: lime;
+
+  padding: 0em 0.3em 0em;
+
+  border-radius: 0.3em;
+
+  cursor: pointer;
+}
+footer > a:hover {
+  background-color: #322b36;
+}
 #canvas-wrapper {
   display: inline-block;
   position: relative;
@@ -7,13 +63,16 @@
 .canvas {
   width: 501px;
   height: 501px;
-  border: 1px solid greenyellow;
+
+  border: 1px solid lime;
   image-rendering: pixelated;
 }
 #back-canvas {
   position: relative;
   top: 0;
   left: 0;
+
+  background-color: #030410;
 }
 #draw-canvas {
   position: absolute;
@@ -35,10 +94,44 @@
 form {
   margin: 10px;
 }
+input {
+  color: #8eff8e;
+
+  background-color: #030410;
+  border: 1px solid lime;
+}
+input:focus {
+  background-color: #030410;
+  
+  border: 1px solid #8eff8e;
+  outline: none;
+  border-radius: 0;
+}
+button {
+  color: lime;
+  background-color: #322b36;
+
+  padding: 4px 5px 4px;
+
+  border: none;
+}
+button:hover {
+  color: #00d600;
+  background-color: #3a323f;
+}
+button:active {
+  color: #6aff6a;
+  background-color: #2b252e;
+}
 textarea {
   resize: none;
-}
+  outline: none;
 
+  color: #0101d7;
+
+  background-color: #030410;
+  border: 1px solid lime;
+}
 .red {
-  background-color: rgb(255, 60, 60);
+  background-color: #990000;
 }

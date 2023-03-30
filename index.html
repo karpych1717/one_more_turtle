@@ -6,19 +6,27 @@
     <meta charset='utf-8'>
   </head>
   <body>
-    <div id='canvas-wrapper'>
-      <canvas class='canvas' id='back-canvas'></canvas>
-      <canvas class='canvas' id='draw-canvas'></canvas>
-      <canvas class='canvas' id='animation-canvas'></canvas>      
-    </div>
-    <div id='console-wrapper'>
-        <form id='console-input'>
-          <input type='text' class='input'>
-          <button type='submit'>Run</button>
-          <button type='reset'>Clear</button>
-        </form>
-        <textarea id='console-output' cols='80' rows='10' readonly></textarea>
-    </div>
+    <header>
+      <h1>One more turtle</h1>
+    </header>
+    <main>
+      <div id='canvas-wrapper'>
+        <canvas class='canvas' id='back-canvas'></canvas>
+        <canvas class='canvas' id='draw-canvas'></canvas>
+        <canvas class='canvas' id='animation-canvas'></canvas>      
+      </div>
+      <div id='console-wrapper'>
+          <form id='console-input'>
+            <input type='text' class='input'>
+            <button type='submit'>Run</button>
+            <button type='reset'>Clear</button>
+          </form>
+          <textarea id='console-output' cols='80' rows='10' readonly></textarea>
+      </div>
+    </main>
+    <footer>
+      <a href='https://karpych1717.github.io/simulations/'>Simulations</a>
+    </footer>
 
     <script type='text/javascript' src='black_box/turtle.js'></script>
     <script type='text/javascript' src='black_box/console.js'></script>
