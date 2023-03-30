@@ -43,7 +43,7 @@ const turtle = {
   color: 'blue',
   width: 1,
   trace: true,
-  cow: false,
+  cow: true,
   pic: (() => {
     const pic = new Image()
     pic.src = 'black_box/turtle_sprite.png'
@@ -56,24 +56,24 @@ const turtle = {
 
     if (this.trace) {
       ctx.fillStyle = this.color
-      ctx.fillRect(Math.round(this.x) + 251 - 3, -Math.round(this.y) + 251 - 3, 7, 7)
+      ctx.fillRect(Math.round(this.x) + 251 - 3, - Math.round(this.y) + 251 - 3, 7, 7)
     }
 
-    ctx.translate(Math.round(this.x) + 251.5, -Math.round(this.y) + 251.5)
-    ctx.rotate(-2 * Math.PI * (this.angle) / 360)
+    ctx.translate( Math.round(this.x) + 251.5, - Math.round(this.y) + 251.5)
+    ctx.rotate(-2 * Math.PI * (this.angle - 90) / 360)
 
     if (!this.cow) {
       ctx.drawImage(this.pic, -11.5, -11.5)
     } else {
       cow.draw(ctx, dt)
-    }
+    }   
 
-    ctx.rotate(2 * Math.PI * (this.angle) / 360)
-    ctx.translate(-Math.round(this.x) - 251.5, Math.round(this.y) - 251.5)
+    ctx.rotate(2 * Math.PI * (this.angle - 90) / 360)
+    ctx.translate(- Math.round(this.x) - 251.5,  Math.round(this.y) - 251.5)   
   },
   forwardStep: function (dt) {
     this.x += V_COEF * this.vx * dt
-    this.y += V_COEF * this.vy * dt
+    this.y += V_COEF * this.vy * dt     
   },
   leftStep: function (dt) {
     this.angle += VA_COEF * this.va * dt
@@ -99,11 +99,11 @@ const turtle = {
       this.vx = 0
       this.vy = this.v
     } else if (this.angle === 180) {
-      this.vx = -this.v
+      this.vx = - this.v
       this.vy = 0
     } else if (this.angle === 270) {
       this.vx = 0
-      this.vy = -this.v
+      this.vy = - this.v
     } else {
       this.vx = this.v * Math.cos(Math.PI * this.angle / 180)
       this.vy = this.v * Math.sin(Math.PI * this.angle / 180)
@@ -130,7 +130,7 @@ const turtle = {
   evolve: function (dt) {
     if (this.currentTask === null) {
       this.currentTask = this.tasks.shift() || null
-    } else {
+    }  else {
       if (this.currentTask.time <= 0) {
         if (this.currentTask.type === 'left' || this.currentTask.type === 'right') {
           this.angle = this.currentTask.final
@@ -140,9 +140,9 @@ const turtle = {
           this.y = this.currentTask.finalY
 
           if (this.trace) {
-            drawCTX.beginPath()
-            drawCTX.moveTo(this.currentTask.startX + 251, -this.currentTask.startY + 251)
-            drawCTX.lineTo(this.x + 251, -this.y + 251)
+            drawCTX.beginPath();
+            drawCTX.moveTo(this.currentTask.startX + 251, -this.currentTask.startY + 251);
+            drawCTX.lineTo(this.x + 251, -this.y + 251);
             drawCTX.lineCap = 'round'
             drawCTX.lineWidth = this.width
             drawCTX.strokeStyle = this.color
@@ -156,26 +156,26 @@ const turtle = {
 
     switch (this.currentTask.type) {
       case 'forward':
-        if (this.currentTask.toInit) this.currentForwardTaskInit()
-
+        if(this.currentTask.toInit) this.currentForwardTaskInit()
+        
         this.forwardStep(dt)
 
         if (this.trace) {
-          liveCTX.beginPath()
-          liveCTX.moveTo(this.currentTask.startX + 251, -this.currentTask.startY + 251)
-          liveCTX.lineTo(this.x + 251, -this.y + 251)
+          liveCTX.beginPath();
+          liveCTX.moveTo(this.currentTask.startX + 251, -this.currentTask.startY + 251);
+          liveCTX.lineTo(this.x + 251, -this.y + 251);
           liveCTX.lineCap = 'round'
           liveCTX.lineWidth = this.width
           liveCTX.strokeStyle = this.color
-          liveCTX.stroke()
+          liveCTX.stroke();
         }
         break
       case 'left':
-        if (this.currentTask.toInit) this.currentRotationTaskInit()
+        if(this.currentTask.toInit) this.currentRotationTaskInit()
         this.leftStep(dt)
         break
       case 'right':
-        if (this.currentTask.toInit) this.currentRotationTaskInit()
+        if(this.currentTask.toInit) this.currentRotationTaskInit()
         this.rightStep(dt)
         break
       case 'goto':
@@ -213,39 +213,39 @@ const turtle = {
 }
 
 function forward (length = 30) {
-  turtle.addTask({ type: 'forward', toInit: true, length })
+  turtle.addTask({type: 'forward', toInit: true, length})
 }
 
 function left (angle = 90) {
-  turtle.addTask({ type: 'left', toInit: true, angle })
+  turtle.addTask({type: 'left', toInit: true, angle})
 }
 
 function right (angle = 90) {
-  turtle.addTask({ type: 'right', toInit: true, angle })
+  turtle.addTask({type: 'right', toInit: true, angle})
 }
 
 function goto (x, y) {
-  turtle.addTask({ type: 'goto', x, y })
+  turtle.addTask({type: 'goto', x, y})
 }
 
 function penup () {
-  turtle.addTask({ type: 'penup' })
+  turtle.addTask({type: 'penup'})
 }
 
 function pendown () {
-  turtle.addTask({ type: 'pendown' })
+  turtle.addTask({type: 'pendown'})
 }
 
 function angle (angle) {
-  turtle.addTask({ type: 'angle', angle })
+  turtle.addTask({type: 'angle', angle})
 }
 
 function width (width) {
-  turtle.addTask({ type: 'width', width })
+  turtle.addTask({type: 'width', width})
 }
 
 function color (color) {
-  turtle.addTask({ type: 'color', color })
+  turtle.addTask({type: 'color', color})
 }
 
 function canvasSetUp (id, context, width, height) {
@@ -254,17 +254,17 @@ function canvasSetUp (id, context, width, height) {
   cvs.width = width
   cvs.height = height
 
-  return { cvs, ctx }
+  return {cvs, ctx}
 }
 
-const { cvs: liveCVS, ctx: liveCTX } = canvasSetUp('animation-canvas', '2d', 501, 501)
-const { cvs: drawCVS, ctx: drawCTX } = canvasSetUp('draw-canvas', '2d', 501, 501)
-// const { cvs: backCVS, ctx: backCTX } = canvasSetUp('back-canvas', '2d', 501, 501)
+const {cvs: liveCVS, ctx: liveCTX} = canvasSetUp('animation-canvas', '2d', 501, 501)
+const {cvs: drawCVS, ctx: drawCTX} = canvasSetUp('draw-canvas', '2d', 501, 501)
+// const {cvs: backCVS, ctx: backCTX} = canvasSetUp('back-canvas', '2d', 501, 501)
 
-const timer = (function createTimer () {
+const timer = (function createTimer() {
   let prevTime = new Date().getTime()
 
-  return function () {
+  return function() {
     const currentTime = new Date().getTime()
     const elapsedMs = currentTime - prevTime
     prevTime = currentTime
