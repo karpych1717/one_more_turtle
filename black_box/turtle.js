@@ -244,6 +244,10 @@ function color (color) {
   turtle.addTask({ type: 'color', color })
 }
 
+function theCow () {
+  turtle.cow = !turtle.cow
+}
+
 function canvasSetUp (id, context, width, height) {
   const cvs = document.getElementById(id)
   const ctx = cvs.getContext(context)
