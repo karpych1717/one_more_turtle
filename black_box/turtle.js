@@ -39,7 +39,7 @@ const turtle = {
   color: 'blue',
   width: 1,
   trace: true,
-  cow: true,
+  cow: false,
   pic: (() => {
     const pic = new Image()
     pic.src = 'black_box/turtle_sprite.png'
