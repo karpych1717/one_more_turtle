@@ -1,7 +1,7 @@
 /* global Image */
 
 const V_COEF = 0.002
-const VA_COEF = 0.004
+const VA_COEF = 0.007
 
 const cow = {
   pic: (() => {
