@@ -32,8 +32,8 @@ const turtle = {
   x: 0,
   y: 0,
   v: 20,
-  vx: 0,
-  vy: 20,
+  vx: null,
+  vy: null,
   angle: 90,
   va: 20,
   color: 'blue',
@@ -199,6 +199,24 @@ const turtle = {
         this.color = this.currentTask.color
         this.currentTask = null
         return
+      case 'speedUp':
+        if (this.v < 20000) {
+          this.v *= 2
+          this.va *= 2
+        }
+        this.currentTask = null
+        return
+      case 'speedDown':
+        if (this.v > 5) {
+          this.v /= 2
+          this.va /= 2
+        }
+        this.currentTask = null
+        return
+      case 'runFunction':
+        this.currentTask.callback()
+        this.currentTask = null
+        return
     }
 
     this.currentTask.time -= dt
@@ -244,8 +262,28 @@ function color (color) {
   turtle.addTask({ type: 'color', color })
 }
 
+function speedUp() {
+  turtle.addTask({ type: 'speedUp' })
+}
+
+function speedDown() {
+  turtle.addTask({ type: 'speedDown' })
+}
+
+function runFunction(callback) {
+  turtle.addTask({ type: 'runFunction', callback })
+}
+
 function theCow () {
   turtle.cow = !turtle.cow
+}
+
+function getX () {
+  return turtle.x
+}
+
+function getY () {
+  return turtle.y
 }
 
 function canvasSetUp (id, context, width, height) {
