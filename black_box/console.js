@@ -75,6 +75,10 @@ function turtleHelp () {
   log('  speedUp()')
   log('  speedDown()')
   log('')
+
+  log('  circles()')
+  log('  theCow()')
+  log('')
 }
 
 function say (text) {

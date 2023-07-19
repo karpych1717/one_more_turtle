@@ -1,24 +1,28 @@
-
-// AVAILIABLE COMMANDS
-//   Basic:
-//    goto(x, y)
-//    forward()
-//    forward(length)
+//  Availiable commands:
+//   penup()
+//   pendown()
 //
-//    left()
-//    left(angle)
-//    right()
-//    right(angle)
+//   forward()
+//   ⮩ forward(number)
+//   left()
+//   ⮩ left(number)
+//   right()
+//   ⮩ right(number)
 //
-//    angle(alpha)
+//   goto(x, y)
+//   angle(number)
 //
-//    width(number)
-//    color('color')
+//   width(number)
+//   color('color')
 //
-//    penup()
-//    pendown()
-//    showGrid()
+//   say('text')
+//
+//   speedUp()
+//   speedDown()
+//
 //  Advanced:
-//    circles()
+//   circles()
+//   theCow()
+//
 
 console.log('script.js is ready')
