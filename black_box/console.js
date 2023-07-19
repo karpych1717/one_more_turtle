@@ -1,13 +1,23 @@
-/* global left, right, forward */
-/* global goto, angle, width, color */
-/* global penup, pendown, showGrid */
+const _consoleInput = document.getElementById('console-input')
+const _textInput = _consoleInput.querySelector('.text-input')
+const _textOutput = document.getElementById('console-output')
 
-let task
+_consoleInput.addEventListener('submit', handleInput)
 
-document.getElementById('console-input').addEventListener('submit', function (event) {
+_consoleInput.addEventListener('reset', function () {
+  _textInput.classList.remove('red')
+})
+
+_textInput.addEventListener('input', function () {
+  this.classList.remove('red')
+})
+
+console.log('console.js is ready')
+
+function handleInput (event) {
   event.preventDefault()
 
-  task = this.querySelector('.input').value.trim()
+  const task = _textInput.value.trim()
 
   if (task === '') return
 
@@ -17,14 +27,13 @@ document.getElementById('console-input').addEventListener('submit', function (ev
     this.querySelector('.input').classList.add('red')
     console.error(error.message)
   }
-})
+}
 
-document.getElementById('console-input').addEventListener('reset', function () {
-  this.querySelector('.input').classList.remove('red')
-})
+function log (text) {
+  _textOutput.value += `${text}\n`
+  _textOutput.scrollTop = _textOutput.scrollHeight
+}
 
-document.querySelector('.input').addEventListener('input', function () {
-  this.classList.remove('red')
-})
-
-console.log('console.js is ready')
+function say (text) {
+  log(`the Turtle: '${text}'`)
+}

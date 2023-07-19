@@ -127,7 +127,9 @@ textarea {
   resize: none;
   outline: none;
 
-  color: #0101d7;
+  padding: 0.5rem;
+
+  color: #0000ff;
 
   background-color: #030410;
   border: 1px solid lime;
