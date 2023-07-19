@@ -28,8 +28,12 @@ function handleInput (event) {
   try {
     eval(task)
   } catch (error) {
-    this.querySelector('.input').classList.add('red')
+    _textInput.classList.add('red')
     console.error(error.message)
+
+    log('========= WARNING! =========')
+    log(error.message)
+    log('============================\n')
   }
 }
 
@@ -45,32 +49,32 @@ function turtleLog (text) {
 function turtleHelp () {
   turtleLog('The list of available commands')
 
-  log('⚪ penup()')
-  log('⚪ pendown()')
-  log('⚫')
-
-  log('⚪ forward()')
-  log('⚪ ↳ forward(number)')
-  log('⚪ left()')
-  log('⚪ ↳ left(number)')
-  log('⚪ right()')
-  log('⚪ ↳ right(number)')
+  log('  penup()')
+  log('  pendown()')
   log('')
 
-  log('⚪ goto(x, y)')
-  log('⚪ angle(number)')
-  log('⚫')
+  log('  forward()')
+  log('  ⮩ forward(number)')
+  log('  left()')
+  log('  ⮩ left(number)')
+  log('  right()')
+  log('  ⮩ right(number)')
+  log('')
 
-  log('⚪ width(number)')
-  log('⚪ color(\'color\')')
-  log('⚫')
+  log('  goto(x, y)')
+  log('  angle(number)')
+  log('')
 
-  log('⚪ say(\'text\')')
-  log('⚫')
+  log('  width(number)')
+  log('  color(\'color\')')
+  log('')
 
-  log('⚪ speedUp()')
-  log('⚪ speedDown()')
-  log('⚫')
+  log('  say(\'text\')')
+  log('')
+
+  log('  speedUp()')
+  log('  speedDown()')
+  log('')
 }
 
 function say (text) {
