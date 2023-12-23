@@ -302,6 +302,11 @@ const quest = {
 
     this.berries = berriesPreset.slice(0, _amount)
 
+    for (const berry of this.berries) {
+      berry.sizePhase = Math.random()
+      berry.rotationPhase = Math.random()
+    }
+
     if (Math.random() >= 0.5) {
       for (const berry of this.berries) {
         berry.x *= -1
@@ -315,7 +320,12 @@ const quest = {
 
   draw (ctx) {
     for (const berry of this.berries) {
-      ctx.drawImage(this.pic, berry.x + 251 - 25, -berry.y + 251 - 31.5)
+      ctx.drawImage(
+        this.pic,
+        berry.x + 251 - 25 * berry.sizePhase,
+        -berry.y + 251 - 31.5 * berry.sizePhase,
+        50 * berry.sizePhase,
+        63 * berry.sizePhase)
     }
   }
 
@@ -355,7 +365,7 @@ function goto (x, y) {
   turtle.addTask({ type: 'goto', x, y })
 }
 
-// to remove
+// deprecated?
 function getX () {
   return turtle.x
 }
