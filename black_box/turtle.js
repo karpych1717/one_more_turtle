@@ -3,6 +3,7 @@
 const V_COEF = 0.002
 const VA_COEF = 0.007
 
+// the Cow sprite
 const cow = {
   pic: (() => {
     const pic = new Image()
@@ -28,6 +29,7 @@ const cow = {
   }
 }
 
+// the Turtle
 const turtle = {
   x: 0,
   y: 0,
@@ -48,8 +50,6 @@ const turtle = {
   tasks: [],
   currentTask: null,
   draw: function (ctx, dt) {
-    ctx.clearRect(0, 0, 501, 501)
-
     if (this.trace) {
       ctx.fillStyle = this.color
       ctx.fillRect(Math.round(this.x) + 251 - 3, -Math.round(this.y) + 251 - 3, 7, 7)
@@ -238,10 +238,6 @@ function right (angle = 90) {
   turtle.addTask({ type: 'right', toInit: true, angle })
 }
 
-function goto (x, y) {
-  turtle.addTask({ type: 'goto', x, y })
-}
-
 function penup () {
   turtle.addTask({ type: 'penup' })
 }
@@ -262,14 +258,6 @@ function color (color) {
   turtle.addTask({ type: 'color', color })
 }
 
-function speedUp() {
-  turtle.addTask({ type: 'speedUp' })
-}
-
-function speedDown() {
-  turtle.addTask({ type: 'speedDown' })
-}
-
 function runFunction(callback) {
   turtle.addTask({ type: 'runFunction', callback })
 }
@@ -278,6 +266,96 @@ function theCow () {
   turtle.cow = !turtle.cow
 }
 
+// quest
+const berriesPreset = [
+  { x: -100, y: 100 },
+  { x: -100, y: -100 },
+  { x: -200, y: -200 },
+  { x: 200, y: -200 },
+  { x: 200, y: 200 }
+]
+
+const quest = {
+  berries: [],
+  time: 0,
+  pic: (() => {
+    const pic = new Image()
+    pic.src = 'black_box/strawberry_sprite.png'
+    return pic
+  })(),
+
+  setUp (_amount) {
+    if (isNaN(_amount)) {
+      throw (new Error('      level is NaN'))
+    }
+    if (_amount < 1) {
+      throw (new Error('   level should be >= 1'))
+    }
+    if (_amount > 5) {
+      throw (new Error('   level should be <= 5'))
+    }
+    if (Math.trunc(_amount) !== _amount) {
+      throw (new Error('level is not an integer value'))
+    }
+
+    this.time = 0
+
+    this.berries = berriesPreset.slice(0, _amount)
+
+    if (Math.random() >= 0.5) {
+      for (const berry of this.berries) {
+        berry.x *= -1
+      }
+    }
+  },
+
+  evolve (dt) {
+    this.time += dt
+  },
+
+  draw (ctx) {
+    for (const berry of this.berries) {
+      ctx.drawImage(this.pic, berry.x + 251 - 25, -berry.y + 251 - 31.5)
+    }
+  }
+
+}
+
+function theQuest (level = 1) {
+  turtle.x = 0
+  turtle.y = 0
+
+  turtle.v = 20
+
+  turtle.angle = 90
+  turtle.va = 20
+
+  quest.setUp(level)
+}
+
+function questError () {
+  if (quest.berries.length > 0) {
+    throw (new Error('\n           no :)\n'))
+  }
+}
+
+// hacks
+function speedUp () {
+  questError()
+  turtle.addTask({ type: 'speedUp' })
+}
+
+function speedDown () {
+  questError()
+  turtle.addTask({ type: 'speedDown' })
+}
+
+function goto (x, y) {
+  questError()
+  turtle.addTask({ type: 'goto', x, y })
+}
+
+// to remove
 function getX () {
   return turtle.x
 }
@@ -313,6 +391,11 @@ const timer = (function createTimer () {
 let dt
 function render () {
   dt = timer()
+
+  liveCTX.clearRect(0, 0, 501, 501)
+
+  quest.draw(liveCTX)
+  quest.evolve(dt)
 
   turtle.draw(liveCTX)
   turtle.evolve(dt)
