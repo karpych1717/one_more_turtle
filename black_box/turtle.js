@@ -322,10 +322,10 @@ const quest = {
     for (const berry of this.berries) {
       ctx.drawImage(
         this.pic,
-        berry.x + 251 - 25 * berry.sizePhase,
-        -berry.y + 251 - 31.5 * berry.sizePhase,
-        50 * berry.sizePhase,
-        63 * berry.sizePhase)
+        berry.x + 251 - 25 * (1 - 0.5 * berry.sizePhase),
+        -berry.y + 251 - 31.5 * (1 - 0.5 * berry.sizePhase),
+        50 * (1 - 0.5 * berry.sizePhase),
+        63 * (1 - 0.5 * berry.sizePhase))
     }
   }
 
@@ -341,6 +341,10 @@ function theQuest (level = 1) {
   turtle.va = 20
 
   quest.setUp(level)
+}
+
+function getNearBerry () {
+
 }
 
 function questError () {
