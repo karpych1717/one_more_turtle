@@ -80,7 +80,7 @@ function turtleHelp () {
   log('  speedUp()')
   log("  ⮩ speedUp('max')")
   log('  speedDown()')
-  log("  ⮩ speedDown('min')")
+  log('  ⮩ speedDown(\'min\')')
   log('')
 
   log('  circles()')
