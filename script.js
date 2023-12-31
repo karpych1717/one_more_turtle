@@ -23,6 +23,7 @@
 //  Advanced:
 //   circles()
 //   theCow()
+//   theQuest()
 //
 
 console.log('script.js is ready')

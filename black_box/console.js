@@ -48,9 +48,10 @@ function turtleLog (text) {
 
 function turtleHelp () {
   turtleLog('The list of available commands')
+  log('')
 
-  log('  penup()')
-  log('  pendown()')
+  log('  theQuest()')
+  log('  ⮩ theQuest(number)')
   log('')
 
   log('  forward()')
@@ -67,6 +68,10 @@ function turtleHelp () {
 
   log('  width(number)')
   log('  color(\'color\')')
+  log('')
+
+  log('  penup()')
+  log('  pendown()')
   log('')
 
   log('  say(\'text\')')

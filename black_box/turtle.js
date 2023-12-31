@@ -200,6 +200,10 @@ const turtle = {
         this.currentTask = null
         return
       case 'speedUp':
+        if (this.currentTask.multiplicator === 'max') {
+          this.v = 40_000
+          this.va = 40_000
+        }
         if (this.v < 20000) {
           this.v *= 2
           this.va *= 2
@@ -207,6 +211,10 @@ const turtle = {
         this.currentTask = null
         return
       case 'speedDown':
+        if (this.currentTask.divider === 'min') {
+          this.v = 2.5
+          this.va = 2.5
+        }
         if (this.v > 5) {
           this.v /= 2
           this.va /= 2
@@ -354,14 +362,14 @@ function questError () {
 }
 
 // hacks
-function speedUp () {
+function speedUp (multiplicator) {
   questError()
-  turtle.addTask({ type: 'speedUp' })
+  turtle.addTask({ type: 'speedUp', multiplicator })
 }
 
-function speedDown () {
+function speedDown (divider) {
   questError()
-  turtle.addTask({ type: 'speedDown' })
+  turtle.addTask({ type: 'speedDown', divider })
 }
 
 function goto (x, y) {
