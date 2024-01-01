@@ -13,6 +13,8 @@ _textInput.addEventListener('input', function () {
   this.classList.remove('red')
 })
 
+reset()
+
 console.log('console.js is ready')
 
 function handleInput (event) {
@@ -46,8 +48,16 @@ function turtleLog (text) {
   log(`the Turtle: '${text}'`)
 }
 
+function reset () {
+  _textOutput.value = 'Використайте команду help() щоб отримати список доступних команд.\n\n'
+  turtleReset()
+}
+
 function turtleHelp () {
-  turtleLog('The list of available commands')
+  turtleLog('Список доступних команд')
+  log('')
+
+  log('  reset()')
   log('')
 
   log('  theQuest()')

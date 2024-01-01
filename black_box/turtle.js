@@ -1,5 +1,9 @@
 /* global Image */
 
+const DEFAULT_V = 20
+const DEFAULT_VA = 20
+const DEFAULT_COLOR = 'blue'
+
 const V_COEF = 0.002
 const VA_COEF = 0.007
 
@@ -33,12 +37,12 @@ const cow = {
 const turtle = {
   x: 0,
   y: 0,
-  v: 20,
+  v: DEFAULT_V,
   vx: null,
   vy: null,
   angle: 90,
-  va: 20,
-  color: 'blue',
+  va: DEFAULT_VA,
+  color: DEFAULT_COLOR,
   width: 1,
   trace: true,
   cow: false,
@@ -409,6 +413,23 @@ const timer = (function createTimer () {
     return elapsedMs < 40 ? elapsedMs : 40
   }
 })()
+
+function turtleReset () {
+  liveCTX.clearRect(0, 0, 501, 501)
+  drawCTX.clearRect(0, 0, 501, 501)
+
+  turtle.x = 0
+  turtle.y = 0
+  turtle.angle = 90
+
+  turtle.v = DEFAULT_V
+  turtle.va = DEFAULT_VA
+  turtle.color = DEFAULT_COLOR
+  turtle.width = 1
+  turtle.trace = true
+
+  turtle.cow = false
+}
 
 let dt
 function render () {
