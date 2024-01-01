@@ -1,4 +1,4 @@
-/* global liveCTX turtle quest cow */
+/* global liveCTX turtle quest */
 
 const timer = (function createTimer () {
   let prevTime = new Date().getTime()

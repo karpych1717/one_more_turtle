@@ -14,7 +14,9 @@ const berriesPreset = [
 const quest = {
   berries: [],
   nearBerry: null,
-  time: 0,
+  candidateBerry: null,
+  timer: 0,
+  level: 0,
   pic: (() => {
     const pic = new Image()
     pic.src = 'black_box/strawberry_sprite.png'
@@ -35,7 +37,8 @@ const quest = {
       throw (new Error('level is not an integer value'))
     }
 
-    this.time = 0
+    this.timer = 0
+    this.level = _amount
 
     this.berries = berriesPreset.slice(0, _amount)
 
@@ -54,7 +57,7 @@ const quest = {
   evolve (dt) {
     if (this.berries.length === 0) return
 
-    this.time += dt
+    this.timer += dt
 
     for (const berry of this.berries) {
       berry.sizePhase += dt / BERRY_SIZE_PERIOD
@@ -66,17 +69,29 @@ const quest = {
 
     this.nearBerry = getNearBerry()
 
-    if (this.nearBerry) {
+    if (this.nearBerry && !this.candidateBerry) {
+      this.candidateBerry = this.nearBerry
       runFunction(this.eatBerry.bind(this))
     }
   },
 
   eatBerry () {
-    if (this.nearBerry === getNearBerry()) {
+    if (this.candidateBerry === getNearBerry()) {
       this.berries = this.berries.filter(berry => berry !== this.nearBerry)
+      this.candidateBerry = null
 
       turtleLog('Смачно!')
-      turtleLog('Часу минуло ' + Math.trunc(this.timer) + ' секунд.')
+      turtleLog('Часу минуло ' + Math.trunc(this.timer / 1000) + ' секунд.')
+
+      if (this.berries.length === 0) {
+        turtleLog(
+          'Дякую! Остаточний результат за рівень ' +
+          this.level +
+          ' складає ' +
+          Math.trunc(this.timer / 1000) +
+          ' секунд.'
+        )
+      }
     }
   },
 
@@ -122,6 +137,10 @@ function startQuest (level = 1) {
   turtle.va = 20
 
   quest.setUp(level)
+}
+
+function stopQuest () {
+  quest.berries = []
 }
 
 function getNearBerry () {
