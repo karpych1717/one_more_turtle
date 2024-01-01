@@ -1,4 +1,4 @@
-/* global runFunction turtleReset */
+/* global runFunction turtleReset turtle quest */
 const _consoleInput = document.getElementById('console-input')
 const _textInput = _consoleInput.querySelector('.text-input')
 const _textOutput = document.getElementById('console-output')
@@ -29,6 +29,7 @@ function handleInput (event) {
 
   try {
     eval(task)
+    if (quest.berries.length > 0 && turtle.tasks.length > 1) turtle.tasks.length = 1
   } catch (error) {
     _textInput.classList.add('red')
     console.error(error.message)
