@@ -327,6 +327,8 @@ const quest = {
   },
 
   evolve (dt) {
+    if (this.berries.length === 0) return
+
     this.time += dt
   },
 
