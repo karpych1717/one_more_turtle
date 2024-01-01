@@ -7,6 +7,9 @@ const DEFAULT_COLOR = 'blue'
 const V_COEF = 0.002
 const VA_COEF = 0.007
 
+const BERRY_SIZE_PERIOD = 2625
+const BERRY_ROTATION_PERIOD = 5500
+
 // the Cow sprite
 const cow = {
   pic: (() => {
@@ -330,17 +333,44 @@ const quest = {
     if (this.berries.length === 0) return
 
     this.time += dt
+
+    for (const berry of this.berries) {
+      berry.sizePhase += dt / BERRY_SIZE_PERIOD
+      berry.rotationPhase += dt / BERRY_ROTATION_PERIOD
+
+      if (berry.sizePhase > 1) berry.sizePhase = 0
+      if (berry.rotationPhase > 1) berry.rotationPhase = 0
+    }
   },
 
   draw (ctx) {
     for (const berry of this.berries) {
+      const halfWidth = 25 * this.sizePhaseMultiplier(berry.sizePhase)
+      const halfHeight = 31.5 * this.sizePhaseMultiplier(berry.sizePhase)
+      const angle = this.angleByPhase(berry.rotationPhase)
+
+      ctx.translate(berry.x + 251, -berry.y + 251)
+      ctx.rotate(angle)
+
       ctx.drawImage(
         this.pic,
-        berry.x + 251 - 25 * (1 - 0.5 * berry.sizePhase),
-        -berry.y + 251 - 31.5 * (1 - 0.5 * berry.sizePhase),
-        50 * (1 - 0.5 * berry.sizePhase),
-        63 * (1 - 0.5 * berry.sizePhase))
+        -halfWidth,
+        -halfHeight,
+        2 * halfWidth,
+        2 * halfHeight
+      )
+
+      ctx.rotate(-angle)
+      ctx.translate(-berry.x - 251, berry.y - 251)
     }
+  },
+
+  sizePhaseMultiplier (phase) {
+    return 1 - 0.07 * (1 + Math.sin(2 * Math.PI * phase))
+  },
+
+  angleByPhase (phase) {
+    return 0.15 * Math.PI * Math.sin(2 * Math.PI * phase)
   }
 
 }
@@ -358,6 +388,8 @@ function theQuest (level = 1) {
 }
 
 function getNearBerry () {
+  if (quest.berries.length === 0) return
+
 
 }
 
