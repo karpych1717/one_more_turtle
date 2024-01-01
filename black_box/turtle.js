@@ -428,7 +428,12 @@ function turtleReset () {
   turtle.width = 1
   turtle.trace = true
 
+  turtle.tasks = []
+  turtle.currentTask = null
+
   turtle.cow = false
+
+  quest.berries = []
 }
 
 let dt
