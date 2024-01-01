@@ -91,6 +91,11 @@ footer > a:hover {
 
   margin: 10px
 }
+
+#console-input {
+  vertical-align: bottom;
+}
+
 form {
   margin: 10px;
 }
@@ -99,6 +104,8 @@ input {
 
   background-color: #030410;
   border: 1px solid lime;
+
+  padding: 4px 5px 3px;
 }
 input:focus {
   background-color: #030410;
@@ -114,6 +121,8 @@ button {
   padding: 4px 5px 4px;
 
   border: none;
+
+  vertical-align: middle;
 }
 button:hover {
   color: #00d600;

@@ -1,8 +1,13 @@
-/* global Image */
+/* global Image liveCTX drawCTX */
+
+const DEFAULT_V = 20
+const DEFAULT_VA = 20
+const DEFAULT_COLOR = 'blue'
 
 const V_COEF = 0.002
 const VA_COEF = 0.007
 
+// the Cow sprite
 const cow = {
   pic: (() => {
     const pic = new Image()
@@ -28,15 +33,16 @@ const cow = {
   }
 }
 
+// the Turtle
 const turtle = {
   x: 0,
   y: 0,
-  v: 20,
+  v: DEFAULT_V,
   vx: null,
   vy: null,
   angle: 90,
-  va: 20,
-  color: 'blue',
+  va: DEFAULT_VA,
+  color: DEFAULT_COLOR,
   width: 1,
   trace: true,
   cow: false,
@@ -48,8 +54,6 @@ const turtle = {
   tasks: [],
   currentTask: null,
   draw: function (ctx, dt) {
-    ctx.clearRect(0, 0, 501, 501)
-
     if (this.trace) {
       ctx.fillStyle = this.color
       ctx.fillRect(Math.round(this.x) + 251 - 3, -Math.round(this.y) + 251 - 3, 7, 7)
@@ -124,6 +128,8 @@ const turtle = {
     }
   },
   evolve: function (dt) {
+    cow.evolve(dt)
+
     if (this.currentTask === null) {
       this.currentTask = this.tasks.shift() || null
     } else {
@@ -200,6 +206,10 @@ const turtle = {
         this.currentTask = null
         return
       case 'speedUp':
+        if (this.currentTask.multiplicator === 'max') {
+          this.v = 40_000
+          this.va = 40_000
+        }
         if (this.v < 20000) {
           this.v *= 2
           this.va *= 2
@@ -207,6 +217,10 @@ const turtle = {
         this.currentTask = null
         return
       case 'speedDown':
+        if (this.currentTask.divider === 'min') {
+          this.v = 2.5
+          this.va = 2.5
+        }
         if (this.v > 5) {
           this.v /= 2
           this.va /= 2
@@ -238,10 +252,6 @@ function right (angle = 90) {
   turtle.addTask({ type: 'right', toInit: true, angle })
 }
 
-function goto (x, y) {
-  turtle.addTask({ type: 'goto', x, y })
-}
-
 function penup () {
   turtle.addTask({ type: 'penup' })
 }
@@ -262,14 +272,6 @@ function color (color) {
   turtle.addTask({ type: 'color', color })
 }
 
-function speedUp() {
-  turtle.addTask({ type: 'speedUp' })
-}
-
-function speedDown() {
-  turtle.addTask({ type: 'speedDown' })
-}
-
 function runFunction(callback) {
   turtle.addTask({ type: 'runFunction', callback })
 }
@@ -278,50 +280,24 @@ function theCow () {
   turtle.cow = !turtle.cow
 }
 
-function getX () {
-  return turtle.x
+function turtleReset () {
+  liveCTX.clearRect(0, 0, 501, 501)
+  drawCTX.clearRect(0, 0, 501, 501)
+
+  turtle.x = 0
+  turtle.y = 0
+  turtle.angle = 90
+
+  turtle.v = DEFAULT_V
+  turtle.va = DEFAULT_VA
+  turtle.color = DEFAULT_COLOR
+  turtle.width = 1
+  turtle.trace = true
+
+  turtle.tasks = []
+  turtle.currentTask = null
+
+  turtle.cow = false
 }
-
-function getY () {
-  return turtle.y
-}
-
-function canvasSetUp (id, context, width, height) {
-  const cvs = document.getElementById(id)
-  const ctx = cvs.getContext(context)
-  cvs.width = width
-  cvs.height = height
-
-  return { cvs, ctx }
-}
-
-const { cvs: liveCVS, ctx: liveCTX } = canvasSetUp('animation-canvas', '2d', 501, 501)
-const { cvs: drawCVS, ctx: drawCTX } = canvasSetUp('draw-canvas', '2d', 501, 501)
-// const { cvs: backCVS, ctx: backCTX } = canvasSetUp('back-canvas', '2d', 501, 501)
-
-const timer = (function createTimer () {
-  let prevTime = new Date().getTime()
-
-  return function () {
-    const currentTime = new Date().getTime()
-    const elapsedMs = currentTime - prevTime
-    prevTime = currentTime
-    return elapsedMs < 40 ? elapsedMs : 40
-  }
-})()
-
-let dt
-function render () {
-  dt = timer()
-
-  turtle.draw(liveCTX)
-  turtle.evolve(dt)
-
-  cow.evolve(dt)
-
-  window.requestAnimationFrame(render)
-}
-
-turtle.pic.onload = render
 
 console.log('turtle.js is ready')
