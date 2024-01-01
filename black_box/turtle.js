@@ -1,4 +1,4 @@
-/* global Image */
+/* global Image liveCTX drawCTX */
 
 const DEFAULT_V = 20
 const DEFAULT_VA = 20
@@ -6,9 +6,6 @@ const DEFAULT_COLOR = 'blue'
 
 const V_COEF = 0.002
 const VA_COEF = 0.007
-
-const BERRY_SIZE_PERIOD = 2625
-const BERRY_ROTATION_PERIOD = 5500
 
 // the Cow sprite
 const cow = {
@@ -131,6 +128,8 @@ const turtle = {
     }
   },
   evolve: function (dt) {
+    cow.evolve(dt)
+
     if (this.currentTask === null) {
       this.currentTask = this.tasks.shift() || null
     } else {
@@ -281,173 +280,6 @@ function theCow () {
   turtle.cow = !turtle.cow
 }
 
-// quest
-const berriesPreset = [
-  { x: -100, y: 100 },
-  { x: -100, y: -100 },
-  { x: -200, y: -200 },
-  { x: 200, y: -200 },
-  { x: 200, y: 200 }
-]
-
-const quest = {
-  berries: [],
-  time: 0,
-  pic: (() => {
-    const pic = new Image()
-    pic.src = 'black_box/strawberry_sprite.png'
-    return pic
-  })(),
-
-  setUp (_amount) {
-    if (isNaN(_amount)) {
-      throw (new Error('      level is NaN'))
-    }
-    if (_amount < 1) {
-      throw (new Error('   level should be >= 1'))
-    }
-    if (_amount > 5) {
-      throw (new Error('   level should be <= 5'))
-    }
-    if (Math.trunc(_amount) !== _amount) {
-      throw (new Error('level is not an integer value'))
-    }
-
-    this.time = 0
-
-    this.berries = berriesPreset.slice(0, _amount)
-
-    for (const berry of this.berries) {
-      berry.sizePhase = Math.random()
-      berry.rotationPhase = Math.random()
-    }
-
-    if (Math.random() >= 0.5) {
-      for (const berry of this.berries) {
-        berry.x *= -1
-      }
-    }
-  },
-
-  evolve (dt) {
-    if (this.berries.length === 0) return
-
-    this.time += dt
-
-    for (const berry of this.berries) {
-      berry.sizePhase += dt / BERRY_SIZE_PERIOD
-      berry.rotationPhase += dt / BERRY_ROTATION_PERIOD
-
-      if (berry.sizePhase > 1) berry.sizePhase = 0
-      if (berry.rotationPhase > 1) berry.rotationPhase = 0
-    }
-  },
-
-  draw (ctx) {
-    for (const berry of this.berries) {
-      const halfWidth = 25 * this.sizePhaseMultiplier(berry.sizePhase)
-      const halfHeight = 31.5 * this.sizePhaseMultiplier(berry.sizePhase)
-      const angle = this.angleByPhase(berry.rotationPhase)
-
-      ctx.translate(berry.x + 251, -berry.y + 251)
-      ctx.rotate(angle)
-
-      ctx.drawImage(
-        this.pic,
-        -halfWidth,
-        -halfHeight,
-        2 * halfWidth,
-        2 * halfHeight
-      )
-
-      ctx.rotate(-angle)
-      ctx.translate(-berry.x - 251, berry.y - 251)
-    }
-  },
-
-  sizePhaseMultiplier (phase) {
-    return 1 - 0.07 * (1 + Math.sin(2 * Math.PI * phase))
-  },
-
-  angleByPhase (phase) {
-    return 0.15 * Math.PI * Math.sin(2 * Math.PI * phase)
-  }
-
-}
-
-function theQuest (level = 1) {
-  turtle.x = 0
-  turtle.y = 0
-
-  turtle.v = 20
-
-  turtle.angle = 90
-  turtle.va = 20
-
-  quest.setUp(level)
-}
-
-function getNearBerry () {
-  if (quest.berries.length === 0) return
-
-
-}
-
-function questError () {
-  if (quest.berries.length > 0) {
-    throw (new Error('\n           no :)\n'))
-  }
-}
-
-// hacks
-function speedUp (multiplicator) {
-  questError()
-  turtle.addTask({ type: 'speedUp', multiplicator })
-}
-
-function speedDown (divider) {
-  questError()
-  turtle.addTask({ type: 'speedDown', divider })
-}
-
-function goto (x, y) {
-  questError()
-  turtle.addTask({ type: 'goto', x, y })
-}
-
-// deprecated?
-function getX () {
-  return turtle.x
-}
-
-function getY () {
-  return turtle.y
-}
-
-function canvasSetUp (id, context, width, height) {
-  const cvs = document.getElementById(id)
-  const ctx = cvs.getContext(context)
-  cvs.width = width
-  cvs.height = height
-
-  return { cvs, ctx }
-}
-
-const { cvs: liveCVS, ctx: liveCTX } = canvasSetUp('animation-canvas', '2d', 501, 501)
-const { cvs: drawCVS, ctx: drawCTX } = canvasSetUp('draw-canvas', '2d', 501, 501)
-// const { cvs: backCVS, ctx: backCTX } = canvasSetUp('back-canvas', '2d', 501, 501)
-
-const timer = (function createTimer () {
-  let prevTime = new Date().getTime()
-
-  return function () {
-    const currentTime = new Date().getTime()
-    const elapsedMs = currentTime - prevTime
-    prevTime = currentTime
-    return elapsedMs < 40 ? elapsedMs : 40
-  }
-})()
-
 function turtleReset () {
   liveCTX.clearRect(0, 0, 501, 501)
   drawCTX.clearRect(0, 0, 501, 501)
@@ -466,27 +298,6 @@ function turtleReset () {
   turtle.currentTask = null
 
   turtle.cow = false
-
-  quest.berries = []
 }
-
-let dt
-function render () {
-  dt = timer()
-
-  liveCTX.clearRect(0, 0, 501, 501)
-
-  quest.draw(liveCTX)
-  quest.evolve(dt)
-
-  turtle.draw(liveCTX)
-  turtle.evolve(dt)
-
-  cow.evolve(dt)
-
-  window.requestAnimationFrame(render)
-}
-
-turtle.pic.onload = render
 
 console.log('turtle.js is ready')
