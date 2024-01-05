@@ -62,7 +62,7 @@ function turtleHelp () {
   log('')
 
   log('  startQuest()')
-  log('  ⮩ theQuest(number)')
+  log('  ⮩ startQuest(number)')
   log('')
 
   log('  forward()')
