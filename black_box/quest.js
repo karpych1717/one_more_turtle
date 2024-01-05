@@ -1,4 +1,4 @@
-/* global Image turtle turtleLog runFunction */
+/* global Image turtle turtleLog */
 
 const BERRY_SIZE_PERIOD = 2625
 const BERRY_ROTATION_PERIOD = 5500
@@ -14,7 +14,6 @@ const berriesPreset = [
 const quest = {
   berries: [],
   nearBerry: null,
-  candidateBerry: null,
   timer: 0,
   level: 0,
   pic: (() => {
@@ -69,29 +68,26 @@ const quest = {
 
     this.nearBerry = getNearBerry()
 
-    if (this.nearBerry && !this.candidateBerry) {
-      this.candidateBerry = this.nearBerry
-      runFunction(this.eatBerry.bind(this))
+    if (this.nearBerry) {
+      this.eatBerry(this.nearBerry)
     }
   },
 
-  eatBerry () {
-    if (this.candidateBerry === getNearBerry()) {
-      this.berries = this.berries.filter(berry => berry !== this.nearBerry)
-      this.candidateBerry = null
+  eatBerry (berryToEat) {
+    this.berries = this.berries.filter(berry => berry !== berryToEat)
+    this.nearBerry = null
 
-      turtleLog('Смачно!')
-      turtleLog('Часу минуло ' + Math.trunc(this.timer / 1000) + ' секунд.')
+    turtleLog('Смачно!')
+    turtleLog('Часу минуло ' + Math.trunc(this.timer / 1000) + ' секунд.')
 
-      if (this.berries.length === 0) {
-        turtleLog(
-          'Дякую! Остаточний результат за рівень ' +
-          this.level +
-          ' складає ' +
-          Math.trunc(this.timer / 1000) +
-          ' секунд.'
-        )
-      }
+    if (this.berries.length === 0) {
+      turtleLog(
+        'Дякую! Остаточний результат за рівень ' +
+        this.level +
+        ' складає ' +
+        Math.trunc(this.timer / 1000) +
+        ' секунд.'
+      )
     }
   },
 
