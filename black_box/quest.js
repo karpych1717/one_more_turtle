@@ -132,6 +132,9 @@ function startQuest (level = 1) {
   turtle.angle = 90
   turtle.va = 20
 
+  turtle.tasks = []
+  turtle.currentTask = null
+
   quest.setUp(level)
 }
 
