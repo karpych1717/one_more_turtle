@@ -56,44 +56,46 @@ function turtleHelp () {
   turtleLog('Список доступних команд')
   log('')
 
-  log('  reset()')
+  log('  reset()\t\t- обнулити черепашку')
   log('')
 
-  log('  startQuest()')
-  log('  ⮩ startQuest(number)')
+  log('  startQuest()\t\t- запустити квест')
+  log('  ⮩ startQuest(number)\t- запустити конкретний рівень')
   log('')
 
-  log('  forward()')
-  log('  ⮩ forward(number)')
-  log('  left()')
-  log('  ⮩ left(number)')
-  log('  right()')
-  log('  ⮩ right(number)')
+  log('  forward()\t\t- йти вперед на 30 кроків')
+  log('  ⮩ forward(number)\t- йти вперед на number кроків')
   log('')
 
-  log('  goto(x, y)')
-  log('  angle(number)')
+  log('  left()\t\t- повернути ліворуч на 90 градусів')
+  log('  ⮩ left(number)\t- повернути ліворуч на number градусів')
+  log('  right()\t\t- повернути праворуч')
+  log('  ⮩ right(number)\t- повернути праворуч на number градусів')
   log('')
 
-  log('  width(number)')
-  log('  color(\'color\')')
+  log('  goto(x, y)\t\t- телепортація на координати (x, y)')
+  log('  angle(number)\t\t- встановити кут на angle градусів')
   log('')
 
-  log('  penup()')
-  log('  pendown()')
+  log('  width(number)\t\t- встановити товщину лінії number пікселів')
+  log('  color(\'color\')\t- встановити колір color (англійською мовою)')
   log('')
 
-  log('  say(\'text\')')
+  log('  penup()\t\t- перестати малювати')
+  log('  pendown()\t\t- почати малювати')
   log('')
 
-  log('  speedUp()')
-  log('  ⮩ speedUp(\'max\')')
-  log('  speedDown()')
-  log('  ⮩ speedDown(\'min\')')
+  log('  say(\'text\')\t\t- вивести text в консоль')
   log('')
 
-  log('  circles()')
-  log('  theCow()')
+  log('  speedUp()\t\t- збільшити швидкість')
+  log('  ⮩ speedUp(\'max\')\t- збільшити швидкість до максимуму')
+  log('  speedDown()\t\t- зменшити швидкість')
+  log('  ⮩ speedDown(\'min\')\t- зменшити швидкість до мінімуму')
+  log('')
+
+  log('  circles()\t\t- кола з файлу functions.js (якщо є)')
+  log('  theCow()\t\t- увімкнути режим корівки')
   log('')
 }
 
