@@ -1,4 +1,4 @@
-/* global Image liveCTX drawCTX */
+/* global cowPic turtlePic liveCTX drawCTX */
 
 const DEFAULT_V = 20
 const DEFAULT_VA = 20
@@ -9,11 +9,7 @@ const VA_COEF = 0.007
 
 // the Cow sprite
 const cow = {
-  pic: (() => {
-    const pic = new Image()
-    pic.src = 'black_box/cow_sprite.png'
-    return pic
-  })(),
+  pic: cowPic,
   time: 0,
   period: 2000,
   frame: function () {
@@ -46,11 +42,7 @@ const turtle = {
   width: 1,
   trace: true,
   cow: false,
-  pic: (() => {
-    const pic = new Image()
-    pic.src = 'black_box/turtle_sprite.png'
-    return pic
-  })(),
+  pic: turtlePic,
   tasks: [],
   currentTask: null,
   draw: function (ctx, dt) {

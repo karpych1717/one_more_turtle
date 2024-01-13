@@ -1,4 +1,4 @@
-/* global Image turtle turtleLog */
+/* global berryPic turtle turtleLog */
 
 const BERRY_SIZE_PERIOD = 2625
 const BERRY_ROTATION_PERIOD = 5500
@@ -16,12 +16,7 @@ const quest = {
   nearBerry: null,
   timer: 0,
   level: 0,
-  pic: (() => {
-    const pic = new Image()
-    pic.src = 'black_box/strawberry_sprite.png'
-    return pic
-  })(),
-
+  pic: berryPic,
   setUp (_amount) {
     if (isNaN(_amount)) {
       throw (new Error('      level is NaN'))
