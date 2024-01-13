@@ -1,4 +1,4 @@
-/* global liveCTX turtle quest */
+/* global liveCTX turtle quest crosses */
 
 const timer = (function createTimer () {
   let prevTime = new Date().getTime()
@@ -19,6 +19,9 @@ function render () {
 
   quest.draw(liveCTX)
   quest.evolve(dt)
+
+  crosses.draw(liveCTX)
+  crosses.evolve(dt)
 
   turtle.draw(liveCTX)
   turtle.evolve(dt)
