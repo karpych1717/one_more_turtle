@@ -157,4 +157,4 @@ function questError () {
   }
 }
 
-console.log('quest.js is ready')
+console.log('4) quest.js\t\tis ready')

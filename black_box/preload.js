@@ -1,5 +1,7 @@
 /* global Image */
 
+console.log('^^^^^^^^^^^^^^^^^^^^^^^^')
+
 const cowPic = getPicture('black_box/cow_sprite.png')
 const turtlePic = getPicture('black_box/turtle_sprite.png')
 const berryPic = getPicture('black_box/strawberry_sprite.png')
@@ -10,3 +12,5 @@ function getPicture (path) {
   pic.src = path
   return pic
 }
+
+console.log('1) preload.js\tis ready')

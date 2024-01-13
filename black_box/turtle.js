@@ -292,4 +292,4 @@ function turtleReset () {
   turtle.cow = false
 }
 
-console.log('turtle.js is ready')
+console.log('2) turtle.js\tis ready')

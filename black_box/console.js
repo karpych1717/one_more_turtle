@@ -16,8 +16,6 @@ _textInput.addEventListener('input', function () {
 
 reset()
 
-console.log('console.js is ready')
-
 function handleInput (event) {
   event.preventDefault()
 
@@ -107,4 +105,4 @@ function help () {
   runFunction(() => turtleHelp())
 }
 
-console.log('console.js is ready')
+console.log('3) console.js\tis ready')

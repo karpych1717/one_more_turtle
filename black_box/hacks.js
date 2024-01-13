@@ -23,4 +23,4 @@ function getY () {
   return turtle.y
 }
 
-console.log('hacks.js is ready')
+console.log('6) hacks.js\t\tis ready')

@@ -28,4 +28,5 @@ function render () {
 
 turtle.pic.onload = render
 
-console.log('render.js is ready')
+console.log('7) render.js\tis ready')
+console.log('========================')
