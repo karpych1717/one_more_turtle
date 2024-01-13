@@ -14,7 +14,7 @@ _textInput.addEventListener('input', function () {
   this.classList.remove('red')
 })
 
-reset()
+consoleReset()
 
 function handleInput (event) {
   event.preventDefault()
