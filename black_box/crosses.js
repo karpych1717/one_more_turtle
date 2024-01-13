@@ -1,4 +1,4 @@
-/* global crossPic liveCVS turtleLog */
+/* global crossPic liveCVS turtleLog questError logTheError */
 
 const TIMEOUT = 1000
 const PERIOD = 1100
@@ -47,11 +47,16 @@ class Cross {
 }
 
 function crossOnClick (event) {
-  crosses.addCross(event.offsetX, event.offsetY)
+  try {
+    questError()
+    crosses.addCross(event.offsetX, event.offsetY)
 
-  const virtualX = Math.round(event.offsetX - 251)
-  const virtualY = Math.round(-event.offsetY + 251)
-  turtleLog(`координати: (${virtualX}, ${virtualY})`)
+    const virtualX = Math.round(event.offsetX - 251)
+    const virtualY = Math.round(-event.offsetY + 251)
+    turtleLog(`координати: (${virtualX}, ${virtualY})`)
+  } catch (error) {
+    logTheError(error)
+  }
 }
 
 liveCVS.addEventListener('pointerdown', crossOnClick)

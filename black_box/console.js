@@ -30,12 +30,16 @@ function handleInput (event) {
     eval(task)
   } catch (error) {
     _textInput.classList.add('red')
-    console.error(error.message)
-
-    log('========= WARNING! =========')
-    log(error.message)
-    log('============================\n')
+    logTheError(error)
   }
+}
+
+function logTheError (error) {
+  console.error(error.message)
+
+  log('========= WARNING! =========')
+  log(error.message)
+  log('============================\n')
 }
 
 function log (text) {
