@@ -15,7 +15,6 @@ function goto (x, y) {
   turtle.addTask({ type: 'goto', x, y })
 }
 
-// deprecated?
 function getX () {
   return turtle.x
 }
