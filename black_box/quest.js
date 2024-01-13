@@ -157,4 +157,8 @@ function questError () {
   }
 }
 
+function questReset () {
+  quest.berries.length = 0
+}
+
 console.log('4) quest.js\t\tis ready')

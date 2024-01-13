@@ -1,5 +1,11 @@
 /* global turtle questError logTheError */
 
+function reset () {
+  consoleReset()
+  turtleReset()
+  questReset()
+}
+
 function getX () {
   return turtle.x
 }

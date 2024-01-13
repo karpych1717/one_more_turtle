@@ -51,11 +51,6 @@ function turtleLog (text) {
   log(`the Turtle: '${text}'`)
 }
 
-function reset () {
-  _textOutput.value = 'Використайте команду help() щоб отримати список доступних команд.\n\n'
-  turtleReset()
-}
-
 function turtleHelp () {
   turtleLog('Список доступних команд')
   log('')
@@ -109,6 +104,10 @@ function say (text) {
 
 function help () {
   runFunction(() => turtleHelp())
+}
+
+function consoleReset () {
+  _textOutput.value = 'Використайте команду help() щоб отримати список доступних команд.\n\n'
 }
 
 console.log('3) console.js\tis ready')
