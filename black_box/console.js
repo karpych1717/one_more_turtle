@@ -60,7 +60,7 @@ function turtleHelp () {
   log('')
 
   log('  startQuest()\t\t- запустити квест')
-  log('  ⮩ startQuest(number)\t- запустити конкретний рівень')
+  log('  ⮩ startQuest(number)\t- запустити number рівень квесту')
   log('')
 
   log('  forward()\t\t- йти вперед на 30 кроків')
@@ -69,7 +69,7 @@ function turtleHelp () {
 
   log('  left()\t\t- повернути ліворуч на 90 градусів')
   log('  ⮩ left(number)\t- повернути ліворуч на number градусів')
-  log('  right()\t\t- повернути праворуч')
+  log('  right()\t\t- повернути праворуч на 90 градусів')
   log('  ⮩ right(number)\t- повернути праворуч на number градусів')
   log('')
 
