@@ -132,9 +132,6 @@ button:active {
   color: #6aff6a;
   background-color: #2b252e;
 }
-#download-button {
-  color: #edff00;
-}
 textarea {
   resize: none;
   outline: none;
@@ -149,4 +146,13 @@ textarea {
 }
 .red {
   background-color: #990000;
+}
+#download-link {
+  font-size: 1em;
+  display: inline-block;
+  color: #edff00;
+  text-decoration: none;
+
+  padding: 5px 6px 5px;
+  margin: 10px;
 }
