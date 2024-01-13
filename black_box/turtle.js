@@ -244,11 +244,11 @@ function right (angle = 90) {
   turtle.addTask({ type: 'right', toInit: true, angle })
 }
 
-function penup () {
+function penUp () {
   turtle.addTask({ type: 'penup' })
 }
 
-function pendown () {
+function penDown () {
   turtle.addTask({ type: 'pendown' })
 }
 

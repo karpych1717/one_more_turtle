@@ -80,8 +80,8 @@ function turtleHelp () {
   log('  color(\'color\')\t- встановити колір color (англійською мовою)')
   log('')
 
-  log('  penup()\t\t- перестати малювати')
-  log('  pendown()\t\t- почати малювати')
+  log('  penUp()\t\t- перестати малювати')
+  log('  penDown()\t\t- почати малювати')
   log('')
 
   log('  say(\'text\')\t\t- вивести text в консоль')
