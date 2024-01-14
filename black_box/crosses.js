@@ -36,12 +36,14 @@ class Cross {
   }
 
   draw (ctx) {
+    const phase = (this.time + 0.0005 * this.time ** 2) / PERIOD
+
     ctx.translate(this.x, this.y)
-    ctx.rotate(this.time / PERIOD * 2 * Math.PI)
+    ctx.rotate(phase * 2 * Math.PI)
 
     ctx.drawImage(crossPic, -10.5, -10.5, 21, 21)
 
-    ctx.rotate(-this.time / PERIOD * 2 * Math.PI)
+    ctx.rotate(-phase * 2 * Math.PI)
     ctx.translate(-this.x, -this.y)
   }
 }
