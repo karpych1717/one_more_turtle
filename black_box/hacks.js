@@ -1,4 +1,5 @@
-/* global turtle questError logTheError */
+/* global turtle questError logTheError
+   consoleReset turtleReset questReset */
 
 function reset () {
   consoleReset()
@@ -42,9 +43,12 @@ function questHackError (message, callback, arg) {
   try {
     questError()
     callback.call(turtle, arg)
-  } catch {
-    const error = new Error(message)
-    logTheError(error)
+  } catch (error) {
+    if (error.message === '\n           no :)\n') {
+      logTheError(new Error(message))
+    } else {
+      logTheError(error)
+    }
   }
 }
 

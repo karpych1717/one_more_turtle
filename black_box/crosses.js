@@ -53,6 +53,7 @@ function crossOnClick (event) {
 
     const virtualX = Math.round(event.offsetX - 251)
     const virtualY = Math.round(-event.offsetY + 251)
+
     turtleLog(`координати: (${virtualX}, ${virtualY})`)
   } catch (error) {
     logTheError(error)

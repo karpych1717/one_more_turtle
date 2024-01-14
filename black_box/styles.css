@@ -156,3 +156,6 @@ textarea {
   padding: 5px 6px 5px;
   margin: 10px;
 }
+.hidden {
+  display: none!important;
+}

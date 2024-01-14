@@ -1,4 +1,4 @@
-/* global runFunction turtleReset */
+/* global runFunction */
 
 const _consoleInput = document.getElementById('console-input')
 const _textInput = _consoleInput.querySelector('.text-input')
