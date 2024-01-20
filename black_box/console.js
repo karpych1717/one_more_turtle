@@ -15,6 +15,7 @@ _textInput.addEventListener('input', function () {
 })
 
 consoleReset()
+window.addEventListener('error', (error) => logTheError(error))
 
 function handleInput (event) {
   event.preventDefault()
