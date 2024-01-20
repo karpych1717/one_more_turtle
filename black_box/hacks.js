@@ -18,7 +18,7 @@ function getY () {
 function getAngle () {
   return turtle.angle
 }
- 
+
 function speedUp (multiplicator) {
   questHackError(
     'speedUp() is not alowed',
