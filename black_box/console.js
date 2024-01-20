@@ -53,7 +53,7 @@ function turtleLog (text) {
 }
 
 function turtleHelp () {
-  turtleLog('Список доступних команд')
+  turtleLog('\nСписок доступних команд')
   log('')
 
   log('  reset()\t\t- обнулити черепашку')
