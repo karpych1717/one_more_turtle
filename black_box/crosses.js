@@ -49,6 +49,8 @@ class Cross {
 }
 
 function crossOnClick (event) {
+  if (!isNaN(event.button) && event.button > 0) return
+
   try {
     questError()
     crosses.addCross(event.offsetX, event.offsetY)
